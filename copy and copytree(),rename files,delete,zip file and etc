@@ -1,0 +1,145 @@
+1. How do you distinguish between shutil.copy() and shutil.copytree()?
+2. What function is used to rename files??
+3. What is the difference between the delete functions in the send2trash and shutil modules?
+4.ZipFile objects have a close() method just like File objects’ close() method. What ZipFile method is
+equivalent to File objects’ open() method?
+5. Create a programme that searches a folder tree for files with a certain file extension (such as .pdf
+or .jpg). Copy these files from whatever location they are in to a new folder.
+
+answers-
+1. Distinguishing between shutil.copy() and shutil.copytree():
+   - `shutil.copy(src, dst)` is used to copy a single file from the source path (`src`) to the destination path (`dst`). 
+It creates a new file at the destination location with the same contents as the source file.
+   
+     Example:
+     ```python
+     import shutil
+
+     source_file = "C:\\path\\to\\file.txt"
+     destination_file = "C:\\path\\to\\new_location\\file.txt"
+
+     shutil.copy(source_file, destination_file)
+     ```
+
+   - `shutil.copytree(src, dst)` is used to recursively copy an entire directory tree from the source directory (`src`) to the destination directory (`dst`). 
+It copies all the files and subdirectories from the source directory to the destination directory.
+
+     Example:
+     ```python
+     import shutil
+
+     source_directory = "C:\\path\\to\\directory"
+     destination_directory = "C:\\path\\to\\new_location\\directory"
+
+     shutil.copytree(source_directory, destination_directory)
+     ```
+
+2. The function used to rename files:
+   The `os.rename(src, dst)` function is used to rename files or directories.
+  It takes the source path (`src`) as the original file or directory name and the destination path (`dst`) as the new name.
+
+   Example:
+   ```python
+   import os
+
+   file_path = "C:\\path\\to\\file.txt"
+   new_file_name = "new_file.txt"
+
+   os.rename(file_path, new_file_name)
+   ```
+
+3. Difference between delete functions in send2trash and shutil modules:
+   - The `send2trash.send2trash(path)` function moves the file or directory at the specified path to the recycle bin or trash instead of permanently deleting it.
+  This provides a safer way of deleting files, as they can be restored from the recycle bin if needed.
+
+     Example:
+     ```python
+     import send2trash
+
+     file_path = "C:\\path\\to\\file.txt"
+
+     send2trash.send2trash(file_path)
+     ```
+
+   - The `shutil.rmtree(path)` function deletes an entire directory tree, including all files and subdirectories, at the specified path. 
+  It permanently removes the files and directories without the ability to restore them.
+
+     Example:
+     ```python
+     import shutil
+
+     directory_path = "C:\\path\\to\\directory"
+
+     shutil.rmtree(directory_path)
+     ```
+
+4.Certainly! Let's explain the fourth question again:
+
+4. The ZipFile method equivalent to File objects' open() method:
+   The `ZipFile()` constructor in the zipfile module is equivalent to the `open()` method for File objects. It is used to create a `ZipFile` object that represents a ZIP archive and provides methods to interact with the contents of the archive.
+
+   Example:
+   ```python
+   import zipfile
+
+   zip_path = "C:\\path\\to\\archive.zip"
+   zip_file = zipfile.ZipFile(zip_path, "r")
+   ```
+
+   In this example, we import the `zipfile` module. We then provide the path to a ZIP archive file, "C:\\path\\to\\archive.zip". We use the `ZipFile()` constructor to create a `ZipFile` object, `zip_file`, by passing the archive path and the mode argument "r" (indicating that we want to open the archive in read mode).
+
+   Once we have the `ZipFile` object, we can use its various methods to perform operations on the ZIP archive, such as extracting files, adding files to the archive, or obtaining information about the files contained within the archive.
+
+   It's important to note that after we are done working with the `ZipFile` object, we should close it using the `close()` method, similar to closing a File object:
+
+   ```python
+   zip_file.close()
+   ```
+
+   Closing the `ZipFile` object is important to ensure that any resources associated with the archive are properly released.
+Certainly! Here's an example of using the `open()` function to open a file:
+
+```python
+file_path = "path/to/file.txt"
+
+# Open the file in read mode
+file = open(file_path, "r")
+
+# Read the contents of the file
+content = file.read()
+print(content)
+
+# Close the file
+file.close()
+```
+
+In this example, we have a file located at "path/to/file.txt". We use the `open()` function to open the file in read mode by passing the file path and the mode argument "r". This allows us to read the contents of the file.
+
+We then use the `read()` method on the file object to read the entire contents of the file as a single string and assign it to the `content` variable. We print the content to the console.
+
+Finally, it's important to close the file using the `close()` method to release any system resources associated with it. Closing the file is a good practice to ensure proper handling of files and to free up system resources.
+5. Program to search and copy files with a specific extension:
+   Here's an example program that searches a folder tree for files with a specific file extension and copies them to a new folder:
+
+   ```python
+   import os
+   import shutil
+
+   def copy_files_by_extension(source_dir, dest_dir, extension):
+       for root, dirs, files in os.walk(source_dir):
+           for file in files:
+               if file.endswith(extension):
+                   source_path = os.path.join(root, file)
+                   dest_path = os.path.join(dest_dir, file)
+                   shutil.copy(source_path, dest_path)
+                   print(f"Copied {file} to {dest_dir}")
+
+   source_directory = "C:\\path\\to\\source_directory"
+   destination_directory = "C:\\path\\to\\destination_directory"
+   file_extension = ".pdf"
+
+   copy_files_by_extension(source_directory, destination_directory, file_extension)
+   ```
+
+   This program recursively searches the `source_directory` for files with the extension `.pdf` and copies them to the `destination_directory`. 
+  Adjust the source directory, destination directory, and file extension according to your requirements.
